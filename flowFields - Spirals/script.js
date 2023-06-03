@@ -9,8 +9,8 @@ ctx.lineWidth = 10;
 // ctx.strokeStyle = "magenta";
 
 //canvas shadow
-ctx.shadowOffsetX = 2;
-ctx.shadowOffsetY = 2;
+// ctx.shadowOffsetX = 2;
+// ctx.shadowOffsetY = 2;
 
 const grad1 = ctx.createLinearGradient(0,0, canvas.width, canvas.height)
 grad1.addColorStop('0.2', 'pink');
@@ -21,17 +21,17 @@ grad1.addColorStop('0.6', 'green');
 grad1.addColorStop('0.7', 'turquoise');
 grad1.addColorStop('0.8', 'violet');
 
-const grad2 = ctx.createRadialGradient(canvas.width * 0.5, canvas.height * 0.5, 30, canvas.width * 0.5, canvas.height * 0.5, 200,)
-grad2.addColorStop('0.4', 'orange');
-grad2.addColorStop('0.6', 'blue');
-grad2.addColorStop('0.5', 'pink');
+// const grad2 = ctx.createRadialGradient(canvas.width * 0.5, canvas.height * 0.5, 30, canvas.width * 0.5, canvas.height * 0.5, 200,)
+// grad2.addColorStop('0.4', 'orange');
+// grad2.addColorStop('0.6', 'blue');
+// grad2.addColorStop('0.5', 'pink');
 
 //Image pattern background
-const patternImg = document.getElementById('patternImg');
-console.log(patternImg);
-const pattern1 = ctx.createPattern(patternImg, 'no-repeat');
+// const patternImg = document.getElementById('patternImg');
+// console.log(patternImg);
+// const pattern1 = ctx.createPattern(patternImg, 'no-repeat');
 
-ctx.strokeStyle = pattern1;
+ctx.strokeStyle = grad1;
 
 class Line {
 
@@ -49,6 +49,10 @@ class Line {
         this.speedY = 7;
         this.lifeSpan = this.maxLength * 2;
         this.timer = 0;
+        this.angle = 0;
+        this.va = Math.random() * 0.5 - 0.25;
+        this.curve = 0.1;
+        this.vc = 0.05;
 
     }
 
@@ -69,9 +73,13 @@ class Line {
 
     update() {
         this.timer++;
+        // this.angle += 0.1;
+        this.angle += this.va;
+        this.curve += this.vc;
         if (this.timer < this.lifeSpan) {
-            this.x += this.speedX + Math.random() * 20 - 10;
-            this.y += this.speedY + Math.random() * 20 - 10;
+            this.x += Math.sin(this.angle) * this.curve;
+            // this.y += Math.sin(this.angle) * this.curve;
+            this.y += Math.cos(this.angle) * this.curve;
             this.history.push({x: this.x, y: this.y});
             if (this.history.length > this.maxLength) {
                 this.history.shift();
@@ -89,12 +97,14 @@ class Line {
         this.y = Math.random() * canvas.height;
         this.history = [{x: this.x, y: this.y}];
         this.timer = 0;
+        this.angle = 0;
+        this.curve = 0;
 
     }
 }
 
 const linesArray = [];
-const numberOfLines = 50;
+const numberOfLines = 25;
 
 for (let i = 0; i < numberOfLines; i ++) {
     linesArray.push(new Line(canvas));
