@@ -30,7 +30,6 @@ class Particle {
         context.beginPath();
         context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         context.fill();
-        // context.stroke();
     };
 
     update() {
@@ -68,9 +67,6 @@ class Particle {
             this.y = this.effect.height - this.radius;
             this.vy *= -1;
         }
-
-
- 
     };
 
     reset() {
@@ -95,7 +91,7 @@ class Effect {
             y: 0,
             pressed: false,
             radius: 100,
-        }
+        };
 
         window.addEventListener('resize', e => {
             this.resize(e.target.window.innerWidth, e.target.window.innerHeight)
@@ -154,7 +150,7 @@ class Effect {
                 }
             }
         }
-    }
+    };
 
     resize(width, height) {
         this.canvas.width = width;
@@ -172,8 +168,8 @@ class Effect {
         this.particles.forEach(particle => {
             particle.reset();
         })
-    }
-}
+    };
+};
 
 const effect = new Effect(canvas, ctx);
 
