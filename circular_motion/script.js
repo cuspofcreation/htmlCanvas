@@ -18,6 +18,18 @@ window.addEventListener('click', () => {
     })
 });
 
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    elements.forEach(e => {
+        e.initialX = canvas.width / 2;
+        e.initialY = canvas.height / 2;
+        e.x = canvas.width / 2;
+        e.y = canvas.height / 2;
+    })
+})
+
 class VortexElement {
 
     constructor (x, y, radius, color) {
@@ -53,6 +65,9 @@ class VortexElement {
         ctx.stroke();
         ctx.closePath()
     };
+
+    reset() {
+    }
 };
 
 let elements;
