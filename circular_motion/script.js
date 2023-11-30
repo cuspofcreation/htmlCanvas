@@ -12,6 +12,12 @@ const colors = [
     '#088eff',
 ]
 
+window.addEventListener('click', () => {
+    elements.forEach(e => {
+        e.velocity = e.velocity * -1;
+    })
+});
+
 class VortexElement {
 
     constructor (x, y, radius, color) {
