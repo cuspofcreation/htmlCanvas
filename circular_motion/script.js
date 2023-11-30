@@ -10,10 +10,15 @@ class VortexElement {
 
     constructor (x, y, radius, color) {
 
+        this.initialX = x;
+        this.initialY = y;
+
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.color = color
+        this.radians = 0;
+        this.velocity = 0.015;
     };
 
 
@@ -26,27 +31,40 @@ class VortexElement {
     }
 
     update() {
+
+        // let x = this.x;
+        // let y = this.y;
+        this.radians += this.velocity;
+        this.x = this.initialX + Math.cos(this.radians) * 400;
+        // console.log(Math.cos(this.radians) * 100);
+        this.y = this.initialY + Math.sin(this.radians) * 400;
+        // this.y += Math.tan(this.radians);
         this.drawPath()
     }
-}
+};
 
 // Implementation
-let objects
+let elements;
 function init() {
-  objects = []
+  elements = []
 
-  for (let i = 0; i < 400; i++) {
+  for (let i = 0; i < 1; i++) {
     // objects.push()
+    elements.push(new VortexElement(canvas.width/2, canvas.height/2, 5, 'blue') );
   }
+  console.log(elements);
 }
 
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate)
-  c.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-  c.fillText('HTML CANVAS BOILERPLATE', mouse.x, mouse.y)
-  // objects.forEach(object => {
-  //  object.update()
-  // })
+  elements.forEach(e => {
+    e.update();
+  })
+
 }
+
+init();
+animate();
